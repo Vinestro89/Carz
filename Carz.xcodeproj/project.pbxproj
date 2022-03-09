@@ -15,6 +15,7 @@
 		BFB4672127D8FA77007797C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFB4671F27D8FA77007797C6 /* LaunchScreen.storyboard */; };
 		BFB76CEC27D8FF9100C6631B /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB76CEB27D8FF9100C6631B /* Driver.swift */; };
 		BFB76CF327D9008A00C6631B /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB76CF227D9008A00C6631B /* Team.swift */; };
+		BFB76CF527D9085800C6631B /* DriverCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB76CF427D9085800C6631B /* DriverCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		BFB4672227D8FA77007797C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFB76CEB27D8FF9100C6631B /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
 		BFB76CF227D9008A00C6631B /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		BFB76CF427D9085800C6631B /* DriverCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			children = (
 				BFB4671F27D8FA77007797C6 /* LaunchScreen.storyboard */,
 				BFB4671A27D8FA76007797C6 /* Main.storyboard */,
+				BFB76CF427D9085800C6631B /* DriverCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 				BFB4671527D8FA76007797C6 /* AppDelegate.swift in Sources */,
 				BFB76CEC27D8FF9100C6631B /* Driver.swift in Sources */,
 				BFB76CF327D9008A00C6631B /* Team.swift in Sources */,
+				BFB76CF527D9085800C6631B /* DriverCollectionViewCell.swift in Sources */,
 				BFB4671727D8FA76007797C6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
