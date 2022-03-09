@@ -8,16 +8,32 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    let cellReuseIdentifier = "DriverCellReuseIdentifier"
 }
 
 private extension ViewController {
-    func makeDataSource() -> UICollectionViewDiffableDataSource<Team, Driver> {
-        
+    func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Driver> {
+        UICollectionViewDiffableDataSource(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, driver in
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellReuseIdentifier, for: indexPath) as! DriverCollectionViewCell
+                
+                cell.nameLabel.text = "\(driver.firstName) \(driver.lastName)"
+                cell.numberLabel.text = "\(driver.number)"
+                
+                return cell
+            }
+        )
+    }
+    
+    enum Section: Int, CaseIterable {
+        case alpine
+        case redbull
+        case ferrari
+        case mercedes
     }
 }
 
