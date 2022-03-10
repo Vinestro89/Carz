@@ -8,7 +8,6 @@
 import Foundation
 
 struct Driver: Hashable {
-    let team: String
     let firstName: String
     let lastName: String
     let number: Int

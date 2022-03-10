@@ -9,4 +9,5 @@ import Foundation
 
 struct Team: Hashable {
     let name: String
+    let drivers: [Driver]
 }
