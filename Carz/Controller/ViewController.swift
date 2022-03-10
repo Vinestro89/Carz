@@ -43,7 +43,8 @@ class ViewController: UICollectionViewController {
     func makeDataSource() -> UICollectionViewDiffableDataSource<String, OutlineItem> {
         let teamCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Team> { cell, indexPath, team in
             var content = cell.defaultContentConfiguration()
-            content.text = team.name
+            content.image = UIImage(named: team.name)
+            content.imageProperties.maximumSize = CGSize(width: .max, height: 70)
             cell.contentConfiguration = content
             
             let headerDisclosureOption = UICellAccessory.OutlineDisclosureOptions(style: .header)
