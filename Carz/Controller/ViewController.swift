@@ -34,12 +34,7 @@ class ViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.itemSize = CGSize(width: view.bounds.width, height: 120)
-            layout.estimatedItemSize = .zero
-            layout.minimumInteritemSpacing = 10
-        }
-        
+        collectionView.collectionViewLayout = makeCollectionViewLayout()
         collectionView.dataSource = dataSource
         
         updateSnapshot()
@@ -84,11 +79,29 @@ class ViewController: UICollectionViewController {
             sectionSnapshot.append([header])
             sectionSnapshot.append(team.drivers.map { OutlineItem.driver($0) }, to: header)
             
-            sectionSnapshot.expand([header])
+            //sectionSnapshot.expand([header])
         }
         
         
         dataSource.apply(sectionSnapshot, to: "Root", animatingDifferences: false)
+    }
+    
+    func makeCollectionViewLayout() -> UICollectionViewLayout {
+        UICollectionViewCompositionalLayout {_, _ in
+            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(80)
+            ))
+
+            let group = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .fractionalHeight(1)),
+                subitems: [item]
+            )
+
+            return NSCollectionLayoutSection(group: group)
+        }
     }
 }
 

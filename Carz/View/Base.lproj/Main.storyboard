@@ -24,14 +24,14 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DriverCellReuseIdentifier" id="DqG-gy-3Ey" customClass="DriverCollectionViewCell" customModule="Carz" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lUr-Wg-qK0">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Usw-US-Vcc">
-                                            <rect key="frame" x="14" y="44.5" width="386" height="39.5"/>
+                                            <rect key="frame" x="14" y="15.5" width="386" height="39.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Esteban OCON" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1M9-os-TxA">
                                                     <rect key="frame" x="0.0" y="0.0" width="386" height="17"/>
@@ -54,7 +54,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="Usw-US-Vcc" secondAttribute="trailing" constant="6" id="gqC-SA-cnM"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="414" height="128"/>
+                                <size key="customSize" width="414" height="70"/>
                                 <connections>
                                     <outlet property="nameLabel" destination="1M9-os-TxA" id="Rhf-ZQ-ype"/>
                                     <outlet property="numberLabel" destination="6AI-OK-rBK" id="LPi-2e-1Ft"/>
