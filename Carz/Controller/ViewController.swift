@@ -9,27 +9,8 @@ import UIKit
 
 class ViewController: UICollectionViewController {
     
-    private var teams = [
-        Team(name: "Alpine", drivers: [
-            Driver(firstName: "Esteban", lastName: "ocon", number: 31),
-            Driver(firstName: "Fernando", lastName: "alonso", number: 14)
-        ]),
-        Team(name: "Mercedes", drivers: [
-            Driver(firstName: "Lewis", lastName: "Hamilton", number: 44),
-            Driver(firstName: "George", lastName: "Russell", number: 63)
-        ]),
-        Team(name: "Red Bull", drivers: [
-            Driver(firstName: "Max", lastName: "Verstappen", number: 1),
-            Driver(firstName: "Sergio", lastName: "Perez", number: 11)
-        ]),
-        Team(name: "Ferrari", drivers: [
-            Driver(firstName: "Charles", lastName: "Leclerc", number: 16),
-            Driver(firstName: "Carlos", lastName: "Sainz", number: 55)
-        ])
-    ]
-    
-    private lazy var dataSource = makeDataSource()
     let cellReuseIdentifier = "DriverCellReuseIdentifier"
+    private lazy var dataSource = makeDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +20,11 @@ class ViewController: UICollectionViewController {
         
         updateSnapshot()
     }
-    
+}
+
+// MARK: - UICollectionViewDiffableDataSource
+extension ViewController {
+    // This method is finally the equivalent of this good 'ol itemForRowAtIndexPath
     func makeDataSource() -> UICollectionViewDiffableDataSource<String, OutlineItem> {
         let teamCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Team> { cell, indexPath, team in
             var content = cell.defaultContentConfiguration()
@@ -67,27 +52,11 @@ class ViewController: UICollectionViewController {
             }
         )
     }
-    
-    enum OutlineItem: Hashable {
-        case team(Team)
-        case driver(Driver)
-    }
-    
-    func updateSnapshot(animatingChange: Bool = false) {
-        var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<OutlineItem>()
-        
-        for team in teams {
-            let header = OutlineItem.team(team)
-            sectionSnapshot.append([header])
-            sectionSnapshot.append(team.drivers.map { OutlineItem.driver($0) }, to: header)
-            
-            //sectionSnapshot.expand([header])
-        }
-        
-        
-        dataSource.apply(sectionSnapshot, to: "Root", animatingDifferences: false)
-    }
-    
+}
+
+// MARK: - Compositional layout
+extension ViewController {
+    // Here, you decide what size your item will look like
     func makeCollectionViewLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout {_, _ in
             let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
@@ -104,6 +73,30 @@ class ViewController: UICollectionViewController {
 
             return NSCollectionLayoutSection(group: group)
         }
+    }
+}
+
+// MARK: - NSDiffableDataSourceSectionSnapshot
+extension ViewController {
+    enum OutlineItem: Hashable {
+        case team(Team)
+        case driver(Driver)
+    }
+    
+    // Populate the snapshot with your data and apply it to the data source
+    func updateSnapshot(animatingChange: Bool = false) {
+        var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<OutlineItem>()
+        
+        for team in teams {
+            let header = OutlineItem.team(team)
+            sectionSnapshot.append([header])
+            sectionSnapshot.append(team.drivers.map { OutlineItem.driver($0) }, to: header)
+            
+            //sectionSnapshot.expand([header])
+        }
+        
+        
+        dataSource.apply(sectionSnapshot, to: "Root", animatingDifferences: false)
     }
 }
 

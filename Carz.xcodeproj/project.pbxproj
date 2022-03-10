@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF203EF827DA51E40038BB18 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF203EF727DA51E40038BB18 /* Constants.swift */; };
 		BFB4671527D8FA76007797C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB4671427D8FA76007797C6 /* AppDelegate.swift */; };
 		BFB4671727D8FA76007797C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB4671627D8FA76007797C6 /* SceneDelegate.swift */; };
 		BFB4671927D8FA76007797C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB4671827D8FA76007797C6 /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF203EF727DA51E40038BB18 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BFB4671127D8FA76007797C6 /* Carz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Carz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFB4671427D8FA76007797C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFB4671627D8FA76007797C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +45,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF203EF627DA51D90038BB18 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				BF203EF727DA51E40038BB18 /* Constants.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		BFB4670827D8FA76007797C6 = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +72,7 @@
 		BFB4671327D8FA76007797C6 /* Carz */ = {
 			isa = PBXGroup;
 			children = (
+				BF203EF627DA51D90038BB18 /* Data */,
 				BFB76CEF27D8FFE800C6631B /* Controller */,
 				BFB76CEE27D8FFD600C6631B /* View */,
 				BFB76CED27D8FFCD00C6631B /* Model */,
@@ -175,6 +186,7 @@
 				BFB4671527D8FA76007797C6 /* AppDelegate.swift in Sources */,
 				BFB76CEC27D8FF9100C6631B /* Driver.swift in Sources */,
 				BFB76CF327D9008A00C6631B /* Team.swift in Sources */,
+				BF203EF827DA51E40038BB18 /* Constants.swift in Sources */,
 				BFB76CF527D9085800C6631B /* DriverCollectionViewCell.swift in Sources */,
 				BFB4671727D8FA76007797C6 /* SceneDelegate.swift in Sources */,
 			);
