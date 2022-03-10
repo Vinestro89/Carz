@@ -92,6 +92,7 @@ extension ViewController {
             sectionSnapshot.append([header])
             sectionSnapshot.append(team.drivers.map { OutlineItem.driver($0) }, to: header)
             
+            // Remove this comment if you want the sections expanded by default
             //sectionSnapshot.expand([header])
         }
         
