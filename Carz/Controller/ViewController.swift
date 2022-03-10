@@ -10,14 +10,22 @@ import UIKit
 class ViewController: UICollectionViewController {
     
     private var drivers = [
-        Driver(team: "Alpine", firstName: "Esteban", lastName: "ocon", number: 31),
-        Driver(team: "Alpine", firstName: "Fernando", lastName: "alonso", number: 14),
-        Driver(team: "Mercedes", firstName: "Lewis", lastName: "Hamilton", number: 44),
-        Driver(team: "Mercedes", firstName: "George", lastName: "Russell", number: 63),
-        Driver(team: "Red Bull", firstName: "Max", lastName: "Verstappen", number: 1),
-        Driver(team: "Red Bull", firstName: "Sergio", lastName: "Perez", number: 11),
-        Driver(team: "Ferrari", firstName: "Charles", lastName: "Leclerc", number: 16),
-        Driver(team: "Ferrari", firstName: "Carlos", lastName: "Sainz", number: 55)
+        Section.alpine: [
+            Driver(team: "Alpine", firstName: "Esteban", lastName: "ocon", number: 31),
+            Driver(team: "Alpine", firstName: "Fernando", lastName: "alonso", number: 14)
+        ],
+        Section.mercedes: [
+            Driver(team: "Mercedes", firstName: "Lewis", lastName: "Hamilton", number: 44),
+            Driver(team: "Mercedes", firstName: "George", lastName: "Russell", number: 63)
+        ],
+        Section.redbull: [
+            Driver(team: "Red Bull", firstName: "Max", lastName: "Verstappen", number: 1),
+            Driver(team: "Red Bull", firstName: "Sergio", lastName: "Perez", number: 11)
+        ],
+        Section.ferrari: [
+            Driver(team: "Ferrari", firstName: "Charles", lastName: "Leclerc", number: 16),
+            Driver(team: "Ferrari", firstName: "Carlos", lastName: "Sainz", number: 55)
+        ]
     ]
     
     private lazy var dataSource = makeDataSource()
@@ -55,13 +63,20 @@ private extension ViewController {
     }
     
     enum Section: Int, CaseIterable {
-        case all
+        case alpine
+        case redbull
+        case mercedes
+        case ferrari
     }
     
     func updateSnapshot(animatingChange: Bool = false) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Driver>()
-        snapshot.appendSections([.all])
-        snapshot.appendItems(drivers, toSection: .all)
+        snapshot.appendSections(Section.allCases)
+        
+        snapshot.appendItems(drivers[.alpine]!, toSection: .alpine)
+        snapshot.appendItems(drivers[.redbull]!, toSection: .redbull)
+        snapshot.appendItems(drivers[.mercedes]!, toSection: .mercedes)
+        snapshot.appendItems(drivers[.ferrari]!, toSection: .ferrari)
         
         dataSource.apply(snapshot, animatingDifferences: false)
     }
