@@ -29,14 +29,13 @@ class ViewController: UICollectionViewController {
     ]
     
     private lazy var dataSource = makeDataSource()
-    
     let cellReuseIdentifier = "DriverCellReuseIdentifier"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.itemSize = CGSize(width: 120, height: 120)
+            layout.itemSize = CGSize(width: 180, height: 120)
             layout.estimatedItemSize = .zero
             layout.minimumInteritemSpacing = 10
         }
@@ -45,19 +44,15 @@ class ViewController: UICollectionViewController {
         
         updateSnapshot()
     }
-}
-
-private extension ViewController {
+    
     func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Driver> {
-        let cellRegistration = makeCellRegistration()
-        
-        return UICollectionViewDiffableDataSource(
+        UICollectionViewDiffableDataSource(
             collectionView: collectionView,
             cellProvider: { collectionView, indexPath, driver in
-                collectionView.dequeueConfiguredReusableCell(
-                    using: cellRegistration,
-                    for: indexPath,
-                    item: driver)
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellReuseIdentifier, for: indexPath) as! DriverCollectionViewCell
+                cell.nameLabel.text = "\(driver.firstName) \(driver.lastName.uppercased())"
+                cell.numberLabel.text = "#\(driver.number)"
+                return cell
             }
         )
     }
@@ -79,16 +74,6 @@ private extension ViewController {
         snapshot.appendItems(drivers[.ferrari]!, toSection: .ferrari)
         
         dataSource.apply(snapshot, animatingDifferences: false)
-    }
-    
-    typealias Cell = DriverCollectionViewCell
-    typealias CellRegistration = UICollectionView.CellRegistration<Cell, Driver>
-    
-    func makeCellRegistration() -> CellRegistration {
-        CellRegistration { cell, indexPath, driver in
-            cell.nameLabel.text = "\(driver.firstName)\n\(driver.lastName.uppercased())"
-            cell.numberLabel.text = "#\(driver.number)"
-        }
     }
 }
 
