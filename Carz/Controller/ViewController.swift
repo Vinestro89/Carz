@@ -59,6 +59,7 @@ class ViewController: UICollectionViewController {
                     return collectionView.dequeueConfiguredReusableCell(using: teamCellRegistration, for: indexPath, item: team)
                 case .driver(let driver):
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellReuseIdentifier, for: indexPath) as! DriverCollectionViewCell
+                    cell.photoImageView.image = UIImage(named: driver.lastName.lowercased())
                     cell.nameLabel.text = "\(driver.firstName) \(driver.lastName.uppercased())"
                     cell.numberLabel.text = "#\(driver.number)"
                     return cell
@@ -91,13 +92,13 @@ class ViewController: UICollectionViewController {
         UICollectionViewCompositionalLayout {_, _ in
             let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(80)
+                heightDimension: .estimated(76)
             ))
 
             let group = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalHeight(1)),
+                    heightDimension: .estimated(self.view.bounds.height)),
                 subitems: [item]
             )
 

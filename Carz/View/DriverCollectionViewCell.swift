@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class DriverCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var numberLabel: UILabel!
 }
