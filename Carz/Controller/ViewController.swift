@@ -49,15 +49,15 @@ class ViewController: UICollectionViewController {
 
 private extension ViewController {
     func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Driver> {
-        UICollectionViewDiffableDataSource(
+        let cellRegistration = makeCellRegistration()
+        
+        return UICollectionViewDiffableDataSource(
             collectionView: collectionView,
             cellProvider: { collectionView, indexPath, driver in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellReuseIdentifier, for: indexPath) as! DriverCollectionViewCell
-                
-                cell.nameLabel.text = "\(driver.firstName)\n\(driver.lastName.uppercased())"
-                cell.numberLabel.text = "#\(driver.number)"
-                
-                return cell
+                collectionView.dequeueConfiguredReusableCell(
+                    using: cellRegistration,
+                    for: indexPath,
+                    item: driver)
             }
         )
     }
@@ -79,6 +79,16 @@ private extension ViewController {
         snapshot.appendItems(drivers[.ferrari]!, toSection: .ferrari)
         
         dataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    typealias Cell = DriverCollectionViewCell
+    typealias CellRegistration = UICollectionView.CellRegistration<Cell, Driver>
+    
+    func makeCellRegistration() -> CellRegistration {
+        CellRegistration { cell, indexPath, driver in
+            cell.nameLabel.text = "\(driver.firstName)\n\(driver.lastName.uppercased())"
+            cell.numberLabel.text = "#\(driver.number)"
+        }
     }
 }
 
