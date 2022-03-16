@@ -79,6 +79,7 @@ extension ViewController {
                 elementKind: UICollectionView.elementKindSectionHeader,
                 alignment: .top
             )
+            sectionHeader.pinToVisibleBounds = true
             section.boundarySupplementaryItems = [sectionHeader]
             return section
         })
