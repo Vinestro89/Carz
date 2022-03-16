@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UICollectionViewController {
     
+    let headerReuseIdentifier = "TeamCellReuseIdentifier"
     let cellReuseIdentifier = "DriverCellReuseIdentifier"
     private lazy var dataSource = makeDataSource()
     
@@ -25,32 +26,30 @@ class ViewController: UICollectionViewController {
 // MARK: - UICollectionViewDiffableDataSource
 extension ViewController {
     // This method is finally the equivalent of this good 'ol itemForRowAtIndexPath
-    func makeDataSource() -> UICollectionViewDiffableDataSource<String, OutlineItem> {
-        let teamCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Team> { cell, indexPath, team in
-            var content = cell.defaultContentConfiguration()
-            content.image = UIImage(named: team.name)
-            content.imageProperties.maximumSize = CGSize(width: .max, height: 70)
-            cell.contentConfiguration = content
-            
-            let headerDisclosureOption = UICellAccessory.OutlineDisclosureOptions(style: .header)
-            cell.accessories = [.outlineDisclosure(options:headerDisclosureOption)]
-        }
-        
-        return UICollectionViewDiffableDataSource(
+    func makeDataSource() -> UICollectionViewDiffableDataSource<Team, Driver> {
+        let dataSource = UICollectionViewDiffableDataSource<Team, Driver>(
             collectionView: collectionView,
             cellProvider: { collectionView, indexPath, item in
-                switch item {
-                case .team(let team):
-                    return collectionView.dequeueConfiguredReusableCell(using: teamCellRegistration, for: indexPath, item: team)
-                case .driver(let driver):
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellReuseIdentifier, for: indexPath) as! DriverCollectionViewCell
-                    cell.photoImageView.image = UIImage(named: driver.lastName.lowercased())
-                    cell.nameLabel.text = "\(driver.firstName) \(driver.lastName.uppercased())"
-                    cell.numberLabel.text = "#\(driver.number)"
-                    return cell
-                }
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellReuseIdentifier, for: indexPath) as! DriverCollectionViewCell
+                cell.photoImageView.image = UIImage(named: item.lastName.lowercased())
+                cell.nameLabel.text = "\(item.firstName) \(item.lastName.uppercased())"
+                cell.numberLabel.text = "#\(item.number)"
+                return cell
             }
         )
+        
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+            guard kind == UICollectionView.elementKindSectionHeader else { return nil }
+            
+            let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: self.headerReuseIdentifier, for: indexPath) as? TeamCollectionViewCell
+            
+            let team = dataSource.snapshot().sectionIdentifiers[indexPath.section]
+            cell?.photoImageView.image = UIImage(named: team.name)
+            
+            return cell
+        }
+        
+        return dataSource
     }
 }
 
@@ -58,46 +57,47 @@ extension ViewController {
 extension ViewController {
     // Here, you decide what size your item will look like
     func makeCollectionViewLayout() -> UICollectionViewLayout {
-        UICollectionViewCompositionalLayout {_, _ in
-            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(76)
-            ))
-
-            let group = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(self.view.bounds.height)),
-                subitems: [item]
-            )
-
-            return NSCollectionLayoutSection(group: group)
-        }
+        UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+          
+            let size = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(76)
+          )
+          let itemCount = 1
+          let item = NSCollectionLayoutItem(layoutSize: size)
+          let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitem: item, count: itemCount)
+          let section = NSCollectionLayoutSection(group: group)
+          section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+          section.interGroupSpacing = 10
+          
+            // Supplementary header view setup
+          let headerFooterSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(70)
+          )
+          let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerFooterSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+          )
+          section.boundarySupplementaryItems = [sectionHeader]
+          return section
+        })
     }
 }
 
 // MARK: - NSDiffableDataSourceSectionSnapshot
 extension ViewController {
-    enum OutlineItem: Hashable {
-        case team(Team)
-        case driver(Driver)
-    }
-    
     // Populate the snapshot with your data and apply it to the data source
     func updateSnapshot(animatingChange: Bool = false) {
-        var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<OutlineItem>()
+        var snapshot = NSDiffableDataSourceSnapshot<Team, Driver>()
         
+        snapshot.appendSections(teams)
         for team in teams {
-            let header = OutlineItem.team(team)
-            sectionSnapshot.append([header])
-            sectionSnapshot.append(team.drivers.map { OutlineItem.driver($0) }, to: header)
-            
-            // Remove this comment if you want the sections expanded by default
-            //sectionSnapshot.expand([header])
+            snapshot.appendItems(team.drivers, toSection: team)
         }
         
-        
-        dataSource.apply(sectionSnapshot, to: "Root", animatingDifferences: false)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 

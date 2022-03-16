@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF10EA1C27E1E6D100046202 /* TeamCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF10EA1B27E1E6D100046202 /* TeamCollectionViewCell.swift */; };
 		BF203EF827DA51E40038BB18 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF203EF727DA51E40038BB18 /* Constants.swift */; };
 		BFB4671527D8FA76007797C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB4671427D8FA76007797C6 /* AppDelegate.swift */; };
 		BFB4671727D8FA76007797C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB4671627D8FA76007797C6 /* SceneDelegate.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF10EA1B27E1E6D100046202 /* TeamCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCollectionViewCell.swift; sourceTree = "<group>"; };
 		BF203EF727DA51E40038BB18 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BFB4671127D8FA76007797C6 /* Carz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Carz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFB4671427D8FA76007797C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				BFB4671F27D8FA77007797C6 /* LaunchScreen.storyboard */,
 				BFB4671A27D8FA76007797C6 /* Main.storyboard */,
 				BFB76CF427D9085800C6631B /* DriverCollectionViewCell.swift */,
+				BF10EA1B27E1E6D100046202 /* TeamCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 				BFB76CEC27D8FF9100C6631B /* Driver.swift in Sources */,
 				BFB76CF327D9008A00C6631B /* Team.swift in Sources */,
 				BF203EF827DA51E40038BB18 /* Constants.swift in Sources */,
+				BF10EA1C27E1E6D100046202 /* TeamCollectionViewCell.swift in Sources */,
 				BFB76CF527D9085800C6631B /* DriverCollectionViewCell.swift in Sources */,
 				BFB4671727D8FA76007797C6 /* SceneDelegate.swift in Sources */,
 			);
