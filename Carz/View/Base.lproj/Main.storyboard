@@ -19,13 +19,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Esg-54-bub">
                             <size key="itemSize" width="414" height="128"/>
-                            <size key="headerReferenceSize" width="50" height="100"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DriverCellReuseIdentifier" id="DqG-gy-3Ey" customClass="DriverCollectionViewCell" customModule="Carz" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="100" width="414" height="76"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="76"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lUr-Wg-qK0">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="76"/>
@@ -80,27 +80,31 @@
                                     <outlet property="photoImageView" destination="5K9-bg-wgE" id="Pzx-A2-eOz"/>
                                 </connections>
                             </collectionViewCell>
-                        </cells>
-                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="TeamCellReuseIdentifier" id="p8n-MX-d27" customClass="TeamCollectionViewCell" customModule="Carz" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hGb-8Q-UGV">
-                                    <rect key="frame" x="109" y="15" width="196" height="70"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="TeamCellReuseIdentifier" id="jKu-qW-kE8" customClass="TeamCollectionViewCell" customModule="Carz" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="86" width="414" height="128"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lDE-Wm-L8e">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YHC-Ds-Tta">
+                                            <rect key="frame" x="109" y="29" width="196" height="70"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="YHC-Ds-Tta" secondAttribute="height" multiplier="14:5" id="NBl-Rd-OY4"/>
+                                                <constraint firstAttribute="height" constant="70" id="bUh-iq-kqS"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="hGb-8Q-UGV" secondAttribute="height" multiplier="14:5" id="6AM-Sn-vlg"/>
-                                        <constraint firstAttribute="height" constant="70" id="Rjm-6x-lnO"/>
+                                        <constraint firstItem="YHC-Ds-Tta" firstAttribute="centerY" secondItem="lDE-Wm-L8e" secondAttribute="centerY" id="NTO-Vs-JJJ"/>
+                                        <constraint firstItem="YHC-Ds-Tta" firstAttribute="centerX" secondItem="lDE-Wm-L8e" secondAttribute="centerX" id="tsS-mR-jIj"/>
                                     </constraints>
-                                </imageView>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="hGb-8Q-UGV" firstAttribute="centerX" secondItem="p8n-MX-d27" secondAttribute="centerX" id="JOs-dG-IYq"/>
-                                <constraint firstItem="hGb-8Q-UGV" firstAttribute="centerY" secondItem="p8n-MX-d27" secondAttribute="centerY" id="phU-OA-ewF"/>
-                            </constraints>
-                            <connections>
-                                <outlet property="photoImageView" destination="hGb-8Q-UGV" id="IAq-PF-dXE"/>
-                            </connections>
-                        </collectionReusableView>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="photoImageView" destination="YHC-Ds-Tta" id="Sx8-1H-0pX"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
                         <connections>
                             <outlet property="dataSource" destination="WMe-ff-lLu" id="eC4-w5-uKi"/>
                             <outlet property="delegate" destination="WMe-ff-lLu" id="WB7-r7-8oN"/>

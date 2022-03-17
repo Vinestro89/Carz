@@ -9,9 +9,18 @@ import UIKit
 
 class ViewController: UICollectionViewController {
     
+    private typealias DataSource = UICollectionViewDiffableDataSource<Team, ListItem>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<Team, ListItem>
+    private typealias TeamCellRegistration = UICollectionView.CellRegistration<TeamCollectionViewCell, Team>
+    private typealias DriverCellRegistration = UICollectionView.CellRegistration<DriverCollectionViewCell, Driver>
+    
     let headerReuseIdentifier = "TeamCellReuseIdentifier"
     let cellReuseIdentifier = "DriverCellReuseIdentifier"
-    private lazy var dataSource = makeDataSource()
+    private enum ListItem: Hashable {
+        case team(Team)
+        case driver(Driver)
+    }
+    private var dataSource: DataSource!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,37 +28,44 @@ class ViewController: UICollectionViewController {
         collectionView.collectionViewLayout = makeCollectionViewLayout()
         collectionView.dataSource = dataSource
         
-        updateSnapshot()
-    }
-}
-
-// MARK: - UICollectionViewDiffableDataSource
-extension ViewController {
-    // This method is finally the equivalent of this good 'ol itemForRowAtIndexPath
-    func makeDataSource() -> UICollectionViewDiffableDataSource<Team, Driver> {
-        let dataSource = UICollectionViewDiffableDataSource<Team, Driver>(
-            collectionView: collectionView,
-            cellProvider: { collectionView, indexPath, item in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellReuseIdentifier, for: indexPath) as! DriverCollectionViewCell
-                cell.photoImageView.image = UIImage(named: item.lastName.lowercased())
-                cell.nameLabel.text = "\(item.firstName) \(item.lastName.uppercased())"
-                cell.numberLabel.text = "#\(item.number)"
-                return cell
-            }
-        )
-        
-        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
-            guard kind == UICollectionView.elementKindSectionHeader else { return nil }
-            
-            let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: self.headerReuseIdentifier, for: indexPath) as? TeamCollectionViewCell
-            
-            let team = dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            cell?.photoImageView.image = UIImage(named: team.name)
-            
-            return cell
+        // MARK: - Cell registration
+        let teamCellRegistration = TeamCellRegistration { cell, indexPath, team in
+            // App crashes here because photoImageView is nil, WTF ?!
+            cell.photoImageView.image = UIImage(named: team.name)
         }
         
-        return dataSource
+        let driverCellRegistration = DriverCellRegistration { cell, indexPath, driver in
+            cell.photoImageView.image = UIImage(named: driver.lastName.lowercased())
+            cell.nameLabel.text = "\(driver.firstName) \(driver.lastName.uppercased())"
+            cell.numberLabel.text = "#\(driver.number)"
+        }
+        
+        // MARK: - Initialize data source
+        dataSource = UICollectionViewDiffableDataSource<Team, ListItem>(collectionView: collectionView) { (collectionView, indexPath, listItem) -> UICollectionViewCell? in
+            switch listItem {
+            case .team(let team):
+                return collectionView.dequeueConfiguredReusableCell(using: teamCellRegistration, for: indexPath, item: team)
+            case .driver(let driver):
+                return collectionView.dequeueConfiguredReusableCell(using: driverCellRegistration, for: indexPath, item: driver)
+            }
+        }
+        
+        // MARK: - Setup snapshot
+        var snapshot = Snapshot()
+        snapshot.appendSections(teams)
+        dataSource.apply(snapshot)
+        
+        for team in teams {
+            var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<ListItem>()
+            
+            let teamListItem = ListItem.team(team)
+            sectionSnapshot.append([teamListItem])
+            
+            let drivers = team.drivers.map { ListItem.driver($0) }
+            sectionSnapshot.append(drivers, to: teamListItem)
+            
+            dataSource.apply(sectionSnapshot, to: team, animatingDifferences: false)
+        }
     }
 }
 
@@ -68,36 +84,9 @@ extension ViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
             section.interGroupSpacing = 10
-          
-            // Supplementary header view setup
-            let headerFooterSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(70)
-            )
-            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerFooterSize,
-                elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top
-            )
-            sectionHeader.pinToVisibleBounds = true
-            section.boundarySupplementaryItems = [sectionHeader]
+            
             return section
         })
-    }
-}
-
-// MARK: - NSDiffableDataSourceSectionSnapshot
-extension ViewController {
-    // Populate the snapshot with your data and apply it to the data source
-    func updateSnapshot(animatingChange: Bool = false) {
-        var snapshot = NSDiffableDataSourceSnapshot<Team, Driver>()
-        
-        snapshot.appendSections(teams)
-        for team in teams {
-            snapshot.appendItems(team.drivers, toSection: team)
-        }
-        
-        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 

@@ -8,6 +8,6 @@
 import Foundation
 import UIKit
 
-class TeamCollectionViewCell: UICollectionReusableView {
+class TeamCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
 }
