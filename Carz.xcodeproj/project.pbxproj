@@ -18,6 +18,8 @@
 		BFB76CEC27D8FF9100C6631B /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB76CEB27D8FF9100C6631B /* Driver.swift */; };
 		BFB76CF327D9008A00C6631B /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB76CF227D9008A00C6631B /* Team.swift */; };
 		BFB76CF527D9085800C6631B /* DriverCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB76CF427D9085800C6631B /* DriverCollectionViewCell.swift */; };
+		BFD120BE27E48914001F6D99 /* DriverCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD120BD27E48914001F6D99 /* DriverCollectionViewCell.xib */; };
+		BFD120C027E48A8E001F6D99 /* TeamCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD120BF27E48A8E001F6D99 /* TeamCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		BFB76CEB27D8FF9100C6631B /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
 		BFB76CF227D9008A00C6631B /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		BFB76CF427D9085800C6631B /* DriverCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverCollectionViewCell.swift; sourceTree = "<group>"; };
+		BFD120BD27E48914001F6D99 /* DriverCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DriverCollectionViewCell.xib; sourceTree = "<group>"; };
+		BFD120BF27E48A8E001F6D99 /* TeamCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 				BFB4671A27D8FA76007797C6 /* Main.storyboard */,
 				BFB76CF427D9085800C6631B /* DriverCollectionViewCell.swift */,
 				BF10EA1B27E1E6D100046202 /* TeamCollectionViewCell.swift */,
+				BFD120BD27E48914001F6D99 /* DriverCollectionViewCell.xib */,
+				BFD120BF27E48A8E001F6D99 /* TeamCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -173,6 +179,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFB4672127D8FA77007797C6 /* LaunchScreen.storyboard in Resources */,
+				BFD120BE27E48914001F6D99 /* DriverCollectionViewCell.xib in Resources */,
+				BFD120C027E48A8E001F6D99 /* TeamCollectionViewCell.xib in Resources */,
 				BFB4671E27D8FA77007797C6 /* Assets.xcassets in Resources */,
 				BFB4671C27D8FA76007797C6 /* Main.storyboard in Resources */,
 			);

@@ -9,5 +9,5 @@ import Foundation
 import UIKit
 
 class TeamCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet var photoImageView: UIImageView!
 }
