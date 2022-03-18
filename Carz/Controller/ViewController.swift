@@ -65,10 +65,13 @@ extension ViewController {
     private func updateSnapshot(animatingChanges: Bool = false) {
         var snapshot = Snapshot()
         snapshot.appendSections(teams)
+        dataSource.apply(snapshot)
+        
         for team in teams {
-            snapshot.appendItems(team.drivers, toSection: team)
+            var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<Driver>()
+            sectionSnapshot.append(team.drivers)
+            dataSource.apply(sectionSnapshot, to: team, animatingDifferences: animatingChanges)
         }
-        dataSource.apply(snapshot, animatingDifferences: animatingChanges)
     }
 }
 
