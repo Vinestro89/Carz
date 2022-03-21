@@ -34,6 +34,24 @@ class ViewController: UICollectionViewController {
         let nib = UINib(nibName: nibName, bundle: nil)
         return TeamCellRegistration(cellNib: nib) { cell, indexPath, team in
             cell.photoImageView.image = UIImage(named: team.name)
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.teamCellTouched(sender:)))
+            cell.addGestureRecognizer(tapGesture)
+        }
+    }
+    
+    @objc
+    func teamCellTouched(sender: UITapGestureRecognizer) {
+        if let cell = sender.view as? TeamCollectionViewCell, let indexPath = collectionView.indexPath(for: cell) {
+            let team = teams[indexPath.section]
+            var sectionSnapshot = dataSource.snapshot(for: team)
+            let headerTeam = OutlineItem.team(team)
+            if sectionSnapshot.isExpanded(headerTeam) {
+                sectionSnapshot.collapse([headerTeam])
+            } else {
+                sectionSnapshot.expand([headerTeam])
+            }
+            dataSource.apply(sectionSnapshot, to: team)
         }
     }
     
