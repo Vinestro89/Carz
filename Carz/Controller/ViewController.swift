@@ -31,6 +31,19 @@ class ViewController: UICollectionViewController {
         return TeamCellRegistration(supplementaryNib: nib, elementKind: UICollectionView.elementKindSectionHeader) { cell, elementKind, indexPath in
             let team = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
             cell.photoImageView.image = UIImage(named: team.name)
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.teamCellTouched(sender:)))
+            cell.addGestureRecognizer(tapGesture)
+        }
+    }
+    
+    @objc
+    func teamCellTouched(sender: UITapGestureRecognizer) {
+        if let cell = sender.view as? TeamCollectionViewCell, let indexPath = collectionView.indexPathForSupplementaryElement(cell, ofKind: UICollectionView.elementKindSectionHeader) {
+            let team = teams[indexPath.section]
+            var sectionSnapshot = dataSource.snapshot(for: team)
+            sectionSnapshot.delete(team.drivers)
+            dataSource.apply(sectionSnapshot, to: team)
         }
     }
     
@@ -41,6 +54,16 @@ class ViewController: UICollectionViewController {
             cell.nameLabel.text = "\(driver.firstName) \(driver.lastName.uppercased())"
             cell.numberLabel.text = "#\(driver.number)"
         }
+    }
+    
+}
+
+extension UICollectionView {
+    func indexPathForSupplementaryElement(_ supplementaryView: UICollectionReusableView, ofKind kind: String) -> IndexPath? {
+        let visibleIndexPaths = self.indexPathsForVisibleSupplementaryElements(ofKind: kind)
+        return visibleIndexPaths.first(where: {
+            self.supplementaryView(forElementKind: kind, at: $0) == supplementaryView
+        })
     }
     
 }
