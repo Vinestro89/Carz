@@ -9,8 +9,8 @@ import UIKit
 
 class ViewController: UICollectionViewController {
     // MARK: - Typealias
-    private typealias DataSource = UICollectionViewDiffableDataSource<String, OutlineItem>
-    private typealias Snapshot = NSDiffableDataSourceSectionSnapshot<OutlineItem>
+    private typealias DataSource = UICollectionViewDiffableDataSource<Team, OutlineItem>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<Team, OutlineItem>
     private typealias TeamCellRegistration = UICollectionView.CellRegistration<TeamCollectionViewCell, Team>
     private typealias DriverCellRegistration = UICollectionView.CellRegistration<DriverCollectionViewCell, Driver>
     
@@ -68,18 +68,22 @@ extension ViewController {
     
     private func updateSnapshot(animatingChanges: Bool = false) {
         var snapshot = Snapshot()
+        snapshot.appendSections(teams)
+        dataSource.apply(snapshot)
         
         for team in teams {
+            var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<OutlineItem>()
+            
             let header = OutlineItem.team(team)
-            snapshot.append([header])
+            sectionSnapshot.append([header])
             
             let drivers = team.drivers.map { OutlineItem.driver($0) }
-            snapshot.append(drivers, to: header)
-            snapshot.expand([header])
+            sectionSnapshot.append(drivers, to: header)
+            
+            sectionSnapshot.expand([header])
+            
+            dataSource.apply(sectionSnapshot, to: team, animatingDifferences: false)
         }
-        
-        
-        dataSource.apply(snapshot, to: "Root", animatingDifferences: false)
     }
 }
 
